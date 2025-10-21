@@ -1,0 +1,118 @@
+\documentclass[reqno,14pt]{amsart}
+\usepackage{amsmath, amssymb, amsthm, mathtools}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[letterpaper, margin=1in]{geometry}
+\usepackage[usenames, dvipsnames]{xcolor}
+\usepackage[colorlinks=true, linkcolor=Black, citecolor=Black, urlcolor=Black]{hyperref}
+\usepackage[justification=centering]{caption}
+\setlist{
+  listparindent=\parindent,
+  parsep=0pt,
+}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}[lemma]{Proposition}
+\newtheorem{corollary}[lemma]{Corollary}
+\newcommand{\e}{\epsilon}
+
+\title[Estimating a Series with the Integral Test]{Estimating an Infinite Series Using the Integral Test: A Step-by-Step Example}
+\author{Prepared by Charles Destefani}
+\date{2022}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This short article walks through how to estimate the value of a convergent $p$-series using the integral test, step by step. The example problem, taken from a Calculus II homework set, illustrates how to determine the number of terms needed to approximate an infinite series within a given error tolerance.
+\end{abstract}
+
+\section*{Homework 10.3, Question 11}
+
+\textbf{Problem:} Estimate the value of $\displaystyle \sum_{n=1}^\infty \frac{1}{n^3}$ to within $0.009$ of its exact value.
+
+\medskip
+
+To start, we recognize that this is a convergent $p$-series because $p = 3$. But $p$-series do not have a formula for their exact sum, so we must find the value another way. The best approach is to use the \textbf{integral test}.
+
+Before we can apply the integral test, we must first check that the function in question is continuous, positive, and decreasing. The function that corresponds to our series is:
+\[
+    f(x) = \frac{1}{x^3}, \quad \text{so} \quad \sum_{n=1}^\infty \frac{1}{n^3} \longrightarrow \int_1^\infty \frac{1}{x^3}\,dx.
+\]
+This function satisfies the criteria of the integral test, so we can use the integral of $f(x)$ to approximate the sum.
+
+\medskip
+
+We want to estimate the sum to be within $0.009$ of the true sum. In other words, the remainder term $R_n$ (the error between the $n$th partial sum and the true infinite sum) must satisfy
+\[
+    R_n = |S - S_n| \le 0.009.
+\]
+We use absolute value because we want the approximation to be that close in both directions, not just one. This can also be expressed as
+\[
+    -0.009 \le S - S_n \le 0.009,
+\]
+or equivalently,
+\[
+    S_n - 0.009 \le S \le S_n + 0.009.
+\]
+If we can find the smallest integer $n$ that makes this inequality true, then we will have found the number of terms required to achieve the desired accuracy. Our approximation for the sum will then be the $n$th partial sum $S_n$, since it lies in the middle of the interval.
+
+\medskip
+
+Next, we can simplify our analysis by using the fact that all terms in the series are positive. Because every term is positive, the sequence of partial sums is increasing, so $S_n \le S$. This means $S - S_n$ is never negative, and we can simplify our bounds to:
+\[
+    0 \le S - S_n \le 0.009,
+\]
+which implies
+\[
+    S_n \le S \le S_n + 0.009.
+\]
+
+\medskip
+
+Now we turn to the integral test to find the smallest $n$ that satisfies these bounds. The integral test tells us that the remainder $R_n$ can be bounded by:
+\[
+    \int_{n+1}^\infty \frac{1}{x^3}\,dx \le R_n \le \int_n^\infty \frac{1}{x^3}\,dx.
+\]
+We can easily compute these integrals:
+\[
+    \int \frac{1}{x^3}\,dx = -\frac{1}{2x^2}.
+\]
+Applying the limits, we get:
+\[
+    \frac{1}{2(n+1)^2} \le R_n \le \frac{1}{2n^2}.
+\]
+
+\medskip
+
+We now want $R_n \le 0.009$, so:
+\[
+    \frac{1}{2n^2} \le 0.009.
+\]
+Solving for $n$ gives:
+\[
+    n^2 \ge \frac{1}{2(0.009)} = 55.56 \quad \Rightarrow \quad n \ge 7.45.
+\]
+Thus, if $n = 8$ (or any larger integer), we will satisfy the error condition.
+
+\medskip
+
+Finally, our approximation for $S$ will be the 8th partial sum:
+\[
+    S_8 = \sum_{n=1}^8 \frac{1}{n^3} = 1 + \frac{1}{2^3} + \frac{1}{3^3} + \frac{1}{4^3} + \frac{1}{5^3} + \frac{1}{6^3} + \frac{1}{7^3} + \frac{1}{8^3}.
+\]
+Evaluating this gives:
+\[
+    S_8 = 1.195.
+\]
+
+\medskip
+
+Therefore, our estimate of the infinite sum is:
+\[
+    S \approx 1.195 \quad \text{and} \quad |S - S_8| < 0.009.
+\]
+\end{document}
